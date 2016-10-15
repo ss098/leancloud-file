@@ -1,6 +1,6 @@
 # leancloud-file
 
-> LeanCloud _File 表扩展操作面板，基于 Vue.js 2 与 LeanCloud Storage 编写。
+> LeanCloud _File 表扩展操作面板，基于 Vue.js 2，Vuex 与 LeanCloud Storage 编写。
 
 ## Build Setup
 
