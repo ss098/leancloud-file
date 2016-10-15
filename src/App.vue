@@ -6,7 +6,7 @@
         LeanCloud 文件控制台
       </div>
       <div v-if="APP_INPUTBOX" class="card-content">
-        <p>在这里填写您的 APP ID 与 APP KEY。</p>
+        <p>在这里填写您的 APP ID 与 APP KEY，点击确定后可保存。</p>
         <p>
           <input type="text" id="APP_ID" placeholder="APP_ID" v-model.trim="APP_ID" />
         </p>
@@ -34,8 +34,8 @@ export default {
     return {
       // 显示不显示输入框
       APP_INPUTBOX: true,
-      APP_ID: '',
-      APP_KEY: ''
+      APP_ID: window.localStorage.APP_ID,
+      APP_KEY: window.localStorage.APP_KEY
     }
   },
   methods: {
@@ -48,6 +48,9 @@ export default {
         appKey: this.APP_KEY
       })
       this.APP_INPUTBOX = !this.APP_INPUTBOX
+
+      window.localStorage.APP_ID = this.APP_ID
+      window.localStorage.APP_KEY = this.APP_KEY
     }
   }
 }
@@ -137,7 +140,7 @@ export default {
   }
 
   /* Input Widget */
-  input[type="text"], input[type="password"], input[type="email"], input[type="number"], input[type="button"], .button {
+  input[type="text"], input[type="password"], input[type="email"], input[type="number"], input[type="button"], input[type="file"] .button {
     padding: 0.5em;
     font-size: 1rem;
     line-height: 1.2;

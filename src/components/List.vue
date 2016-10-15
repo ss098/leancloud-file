@@ -1,12 +1,14 @@
 <template>
   <div>
     <div class="card-content">
-      共有 {{ count }} 条数据
+      <upload></upload>
+      <p>共有 {{ count }} 条数据</p>
     </div>
-    <div class="card-content paper-list-item" v-for="item in items" v-if="!item.hide" @click="deelteObject(item)">
+    <div class="card-content paper-list-item" v-for="item in items" v-if="!item.hide">
       <input type="text" v-bind:value="item.get('objectId')" />
-      {{ item.get("name") }}
-      <span class="float-right"><a>删除</a></span>
+      {{ formatFileSize(item.get('metaData').size) }}
+      <p>{{ item.get("name") }}</p>
+      <span class="float-right"><a @click="deelteObject(item)">删除</a></span>
       <p><a v-bind:href="item.get('url')" target="_blank">{{ item.get("url") }}</p>
     </div>
   </div>
@@ -14,8 +16,12 @@
 
 <script>
 import AV from 'leancloud-storage'
+import Upload from './Upload.vue'
 
 export default {
+  components: {
+    Upload
+  },
   data () {
     return {
       items: [],
@@ -52,6 +58,13 @@ export default {
       }, (data) => {
         // error
       })
+    },
+    formatFileSize (fileSize, idx = 0) {
+      const units = ['Byte', 'KByte', 'MByte', 'GByte']
+      if (fileSize < 1024 || idx === units.length - 1) {
+        return fileSize.toFixed(1) + units[idx]
+      }
+      return this.formatFileSize(fileSize / 1024, ++idx)
     }
   }
 }
