@@ -4,6 +4,7 @@
 
 <script>
 import AV from 'leancloud-storage'
+import store from '../store.js'
 
 export default {
   data () {
@@ -21,7 +22,8 @@ export default {
       }
       let file = new AV.File(event.target.value, event.target.files[0])
       file.save().then((file) => {
-        console.log(file, event.target)
+        store.commit('getList')
+        store.commit('getCount')
       })
     }
   }

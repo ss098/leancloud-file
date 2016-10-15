@@ -15,8 +15,8 @@
 </template>
 
 <script>
-import AV from 'leancloud-storage'
 import Upload from './Upload.vue'
+import store from '../store.js'
 
 export default {
   components: {
@@ -24,31 +24,27 @@ export default {
   },
   data () {
     return {
-      items: [],
-      count: 0,
-      page: 1,
-      limit: 20
+      data: []
+    }
+  },
+  computed: {
+    count () {
+      return store.state.count
+    },
+    items () {
+      return store.state.items
     }
   },
   created: function () {
-    this.getCount()
     this.getList()
   },
   methods: {
     getCount () {
-      var query = new AV.Query('_File')
-      query.count(this).then((count) => {
-        this.count = count
-      })
+      store.commit('getCount')
     },
     getList () {
-      var query = new AV.Query('_File')
-      query.descending('createdAt')
-      query.find().then((data) => {
-        // data 就是符合条件的第一个 AV.Object
-        this.items = data
-        window.test = data
-      })
+      this.getCount()
+      store.commit('getList')
     },
     deelteObject (object) {
       object.hide = true
