@@ -6,7 +6,7 @@
     </div>
     <div class="card-content paper-list-item" v-for="item in items" v-if="!item.hide">
       <input type="text" v-bind:value="item.get('objectId')" />
-      {{ formatFileSize(item.get('metaData').size) }}
+      {{ item.get('metaData') && formatFileSize(item.get('metaData').size) }}
       <p>{{ item.get("name") }}</p>
       <span class="float-right"><a @click="deelteObject(item)">删除</a></span>
       <p><a v-bind:href="item.get('url')" target="_blank">{{ item.get("url") }}</p>
